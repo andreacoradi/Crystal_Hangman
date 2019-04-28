@@ -9,7 +9,7 @@ impiccato.parola = gp.get_parole(1)[0]
 until impiccato.vinto?
     #CLEAR
     puts "\033[H\033[2J"
-    puts "Parola: #{impiccato.parola}"
+    #puts "Parola: #{impiccato.parola}"
     puts impiccato.currentGuess
     puts "Vite: #{vite}"
     puts "Lettere: #{impiccato.lettere}"

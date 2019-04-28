@@ -20,24 +20,32 @@ class Impiccato
     end
 
     getter lettere
-
+    
     def parola=(@parola : String)
         reset
+    end
+
+    def fine(msg : String)
+        puts msg
+        puts "La parola era #{parola}"
+        exit
+    end
+
+    def vinto?
+        currentGuess == @parola
     end
 
     private def reset
         @lettere = Array(Char).new
         @currentGuess = Array(Char).new
-        @currentGuess << parola[0]
-        i = 1
-        until i >= parola.size - 1
+        @currentGuess << @parola[0]
+        2.to(@parola.size - 1) do |i|
             @currentGuess << '_'
-            i += 1
         end
-        @currentGuess << parola[-1]
+        @currentGuess << @parola[-1]
     end
 
-    def getErrori
+    def errori
         @lettere.size
     end
 
@@ -56,26 +64,16 @@ class Impiccato
         end
         if !contains?(lettera)
             @lettere << lettera
-            if @parola[lettera]?
-
-                /i = 1
-                @parola.chars.each do |c|
+            found = false
+            @parola.each_char_with_index do |c,i|
+                unless i == 0 || i == @parola.size - 1
                     if c == lettera
+                        found = true
                         @currentGuess[i] = c
                     end
-                    i += 1
-                end/
-
-                i = 1
-                until i >= @parola.size - 1
-                    c = @parola[i]
-                    if c == lettera
-                        @currentGuess[i] = c
-                    end
-                    i += 1
                 end
-                return true
             end
+            return found
         else
             false
         end

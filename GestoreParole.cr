@@ -11,7 +11,9 @@ class GestoreParole
         end
         contents = File.read_lines(fileName)
         contents.each do |line|
-            @lista << line
+            if valid?(line)
+                @lista << line
+            end
         end
     end
 
@@ -21,17 +23,25 @@ class GestoreParole
 
     def get_parole(n : Int32)
         temp = Array(String).new
-        i = 0
-        until i >= n 
+        n.times() do |i|
             pos = Random.rand(@lista.size)
             temp << @lista[pos]
-            i += 1
         end
         temp
     end
 
     private def mescola
         @lista.shuffle
+    end
+
+    private def valid?(s : String)
+        valid = true
+        s.chars.each do |c|
+            if c < 'a' || c > 'z'
+                valid = false
+            end
+        end
+        valid
     end
 end
 

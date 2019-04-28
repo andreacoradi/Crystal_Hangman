@@ -6,11 +6,10 @@ impiccato = Impiccato.new
 vite = 5
 gp.open("italian")
 impiccato.parola = gp.get_parole(1)[0]
-#puts impiccato.parola
-until impiccato.currentGuess == impiccato.parola
+until impiccato.vinto?
     #CLEAR
     puts "\033[H\033[2J"
-    
+    puts "Parola: #{impiccato.parola}"
     puts impiccato.currentGuess
     puts "Vite: #{vite}"
     puts "Lettere: #{impiccato.lettere}"
@@ -19,13 +18,16 @@ until impiccato.currentGuess == impiccato.parola
         if !impiccato.addLettera?(guess[0])
             vite -= 1
         end
+    elsif guess.size > 1
+        if guess == impiccato.parola
+            impiccato.fine("Hai vinto")
+        else
+            vite -= 1
+        end
     end
     if vite == 0
-        puts "HAI PERSO!"
-        puts "La parola era #{impiccato.parola}"
-        exit
+        impiccato.fine("Hai Perso!")
     end
 end
 
-puts "HAI VINTO!"
-puts "La parola era #{impiccato.parola}"
+impiccato.fine("Hai vinto!")
